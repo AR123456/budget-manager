@@ -21,30 +21,39 @@ let lastID = parseInt(localStorage.getItem("lastID")) || 0;
 // MAIN PROCESS
 // ======================
 
-// 2nd: wire up click event on 'Enter New Budget Item' button to toggle display of form  26:30 to
+// 2nd: wire up click event on 'Enter New Budget Item' button to toggle display of form  26:30 to  1:00
 
 //jquery way - dont use a fat arrow here it will mess up "this" in a jquery click event
-$("#toggleFormButton").on("click", function() {
-  // what action to take when button is clicked
-  // jquery toggle takes in 2 optional params 1 duration "slow" "fast", 2 a call back function to happen once the animation is complete.
-  //  make a const for addItem for so that we can re use it later in the main process.  No need to make gobal
+$("#toggleFormButton,#hideForm").on("click", function() {
   const addItemForm = $("#addItemForm");
-  const toggleButton = $("#toggleFormButton");
-  // it is ok to use a fat arrow here !
-  //   $("#addItemForm").toggle("slow", () => {
-  // now using the const created above
+  // const toggleButton = $("#toggleFormButton");
+
+  // addItemForm.toggle("slow", () => {
+  //   if (addItemForm.is(":visible")) {
+  //     toggleButton.text("Hide Form");
+  //   } else {
+  //     toggleButton.text("Enter New Budget Item");
+  //   }
+  // });
+  //////// Annes refactor using terrnary operater
+  // addItemForm.toggle("slow", () => {
+  //   addItemForm.is(":visible")
+  //     ? toggleButton.text("Hide Form")
+  //     : toggleButton.text("Enter New Budget Item");
+  // });
+  ///// Sarahs refactor - consider is this over use of ternary ?  will it be readable and understandable to myself and others later ?  Can go too far on ternarys
+
+  // addItemForm.toggle("slow", () => {
+  //   toggleButton.text(
+  //     addItemForm.is(":visible") ? "Hide Form" : "Enter New Budget Items "
+  //   );
+  // });
+
+  // now get rid of consts that are not needed casue they are used only one time
   addItemForm.toggle("slow", () => {
-    // use jquery to determine if item is visible
-    // check css psudo class for visibility
-    // this will yeild a true or false
-    if (addItemForm.is(":visible")) {
-      // inject text into button
-      //   $("#toggleFormButton").text("Hide Form ");
-      // using const
-      toggleButton.text("Hide Form");
-    } else {
-      toggleButton.text("Enter New Budget Item");
-    }
+    $("#toggleFormButton").text(
+      addItemForm.is(":visible") ? "Hide Form" : "Enter New Budget Items "
+    );
   });
 });
 
