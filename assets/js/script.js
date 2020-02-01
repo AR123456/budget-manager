@@ -58,11 +58,17 @@ $("#addItem").on("click", function() {
     alert("something was not filled out ");
     return false;
   }
-  // console.log(newItem);
+
   budgetItems.push(newItem);
   console.log(budgetItems);
   // update local storage & re render budget items
-  // clear out the form 1:29 1:35
+  // clear out the form 1:29 - 1:35
+  /////// form.reset- a javascript methond not Jquery
+  // document.getElementById("annes-form").reset();
+  ///////// jquery way
+  // $("input, select").val("");
+  // $("#addItemForm input, #addItemForm select").val("");
+  /////// hybrid way - useing jquery to target the form by grabbing element ID and tag name and then doing the reset on the resulting array that jquery creates by resetting the first element in the array
   $("#addItemForm form")[0].reset();
 });
 
