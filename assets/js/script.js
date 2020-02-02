@@ -16,13 +16,29 @@ const updateStorage = () => {
   localStorage.setItem("budgetItems", JSON.stringify(budgetItems));
   localStorage.setItem("lastID", lastID);
 };
+// 01:38 to 2:06 res start at 2:06 for getting total
+//https://codingbootcamp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=20a3a525-7333-4de6-9c47-ab4d0018f8d7
 // 5th: function to render budgetItems on table; each item should be rendered in this format:
 // <tr data-id="2"><td>Oct 14, 2019 5:08 PM</td><td>November Rent</td><td>Rent/Mortgage</td><td>1300</td><td>Fill out lease renewal form!</td><td class="delete"><span>x</span></td></tr>
 // also, update total amount spent on page (based on selected category):
-
+const renderItems = items => {
+  if (!items) items = budgetItems;
+  const tbody = $("#budgetItems tbody");
+  tbody.empty();
+  // destructure in the for loop
+  for (const { id, date, name, category, amount, notes } of items) {
+    const row = `<tr data-id${id} ><td>${date}</td><td>${name}</td><td>${category}</td><td>$${parseFloat(
+      amount
+    ).toFixed(
+      2
+    )}</td><td>${notes}</td><td class="delete" ${id}<span>x</span></td></tr>`;
+    tbody.append(row);
+  }
+};
 // ======================
 // MAIN PROCESS
 // ======================
+renderItems();
 
 // 2nd: wire up click event on 'Enter New Budget Item' button to toggle display of form  26:30 to  1:00
 
@@ -65,7 +81,10 @@ $("#addItem").on("click", function() {
   // console.log(newItem);
   budgetItems.push(newItem);
   console.log(budgetItems);
-  // update local storage & re render budget items
+  // update local storage
+  updateStorage();
+  // & re render budget items
+  renderItems(budgetItems);
   // clear out the form 1:29 1:35
   $("#addItemForm form")[0].reset();
 });
@@ -73,3 +92,4 @@ $("#addItem").on("click", function() {
 // 6th: wire up change event on the category select menu, show filtered budgetItems based on selection
 
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
+// renderItems();
