@@ -16,7 +16,8 @@ const updateStorage = () => {
   localStorage.setItem("budgetItems", JSON.stringify(budgetItems));
   localStorage.setItem("lastID", lastID);
 };
-// 01:38 to 2:06 res start at 2:06 for getting total
+// 01:38 to 2:16
+//2:06 res start at 2:06 for getting total use .reduce - reduces down based on formula given can also concatonate
 //https://codingbootcamp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=20a3a525-7333-4de6-9c47-ab4d0018f8d7
 // 5th: function to render budgetItems on table; each item should be rendered in this format:
 // <tr data-id="2"><td>Oct 14, 2019 5:08 PM</td><td>November Rent</td><td>Rent/Mortgage</td><td>1300</td><td>Fill out lease renewal form!</td><td class="delete"><span>x</span></td></tr>
@@ -34,6 +35,17 @@ const renderItems = items => {
     )}</td><td>${notes}</td><td class="delete" ${id}<span>x</span></td></tr>`;
     tbody.append(row);
   }
+  // put the reduce here since this should happen after looping through the items video 2:11
+  const total = items.reduce((accum, item) => {
+    //each round through to this
+    return accum + parseFloat(item.amount);
+  }, 0);
+  // as arrow
+  // const total = items.reduce(
+  //   (accum, item) => accum + parseFloat(item.amount),
+  //   0
+  // );
+  $("#total").text(`$${total.toFixed(2)}`);
 };
 // ======================
 // MAIN PROCESS
