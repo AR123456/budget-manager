@@ -100,8 +100,33 @@ $("#addItem").on("click", function() {
   // clear out the form 1:29 1:35
   $("#addItemForm form")[0].reset();
 });
-
+// 2:16 to 2:37 
+//in video  https://codingbootcamp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=20a3a525-7333-4de6-9c47-ab4d0018f8d7
 // 6th: wire up change event on the category select menu, show filtered budgetItems based on selection
+//id categoryFilter need value to compare to what the value is of the item rendered to the page
+// show them if match and tolal just the ones that match
+// es5 way
+// $("#categoryFilter").on("change", function() {
+//   const category = $(this).val();
+//   const filteredItems = budgetItems.filter(function(item) {
+//     return category === item.category;
+//   });
+//   // console.log(filteredItems);
+//   renderItems(filteredItems);
+// });
+// using an arrow function
+$("#categoryFilter").on("change", function() {
+  const category = $(this).val();
 
+  // console.log(filteredItems);
+  if (category) {
+    const filteredItems = budgetItems.filter(
+      item => category === item.category
+    );
+    renderItems(filteredItems);
+  } else {
+    renderItems();
+  }
+});
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
 // renderItems();
