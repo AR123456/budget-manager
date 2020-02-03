@@ -3,7 +3,7 @@
 // ======================
 
 // 1st: pull initial budgetItems/lastID from localStorage to set initial variables  15:33 min to 26:30
-const budgetItems = JSON.parse(localStorage.getItem("budgetItems")) || [];
+let budgetItems = JSON.parse(localStorage.getItem("budgetItems")) || [];
 let lastID = parseInt(localStorage.getItem("lastID")) || 0;
 
 // ======================
@@ -100,7 +100,7 @@ $("#addItem").on("click", function() {
   // clear out the form 1:29 1:35
   $("#addItemForm form")[0].reset();
 });
-// 2:16 to 2:37 
+// 2:16 to 2:37
 //in video  https://codingbootcamp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=20a3a525-7333-4de6-9c47-ab4d0018f8d7
 // 6th: wire up change event on the category select menu, show filtered budgetItems based on selection
 //id categoryFilter need value to compare to what the value is of the item rendered to the page
@@ -128,5 +128,25 @@ $("#categoryFilter").on("change", function() {
     renderItems();
   }
 });
+// 2:37 to  2:59 in video
+// this is not working  
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
-// renderItems();
+$("#budgetItems").on("click", ".delete span", function() {
+  // grabbing the 'data-id' of the row containing the delete 'x' that was clicked;
+  // converting it from a string to an integer
+  const id = parseInt(
+    $(this)
+      .parents("tr")
+      .data("id")
+  );
+  // filtering budgetItems to get an array of all budget items BUT the one we want to delete
+  const remainingItems = budgetItems.filter(item => item.id !== id);
+  // updating the budgetItems variable to store the filtered version created above
+  budgetItems = remainingItems;
+  // updating localStorage with the latest budgetItems array
+  updateStorage();
+  // rendering the updated budget items in the table
+  renderItems();
+  // resetting the category filter to the default
+  $("#categoryFilter").val("");
+});
