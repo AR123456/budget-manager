@@ -3,7 +3,9 @@
 // ======================
 
 // 1st: pull initial budgetItems/lastID from localStorage to set initial variables  15:33 min to 26:30
+// pull budgetItems array from localStorage and parse it from a string into an array... if falsy, set to []
 let budgetItems = JSON.parse(localStorage.getItem("budgetItems")) || [];
+// pull lastID number from localStorage; if falsy, set to 0
 let lastID = parseInt(localStorage.getItem("lastID")) || 0;
 
 // ======================
@@ -28,11 +30,13 @@ const renderItems = items => {
   tbody.empty();
   // destructure in the for loop
   for (const { id, date, name, category, amount, notes } of items) {
-    const row = `<tr data-id${id} ><td>${date}</td><td>${name}</td><td>${category}</td><td>$${parseFloat(
-      amount
-    ).toFixed(
-      2
-    )}</td><td>${notes}</td><td class="delete" ${id}<span>x</span></td></tr>`;
+    const row = `<tr data-id=${id}>
+    <td>${date}</td>
+    <td>${name}</td>
+    <td>${category}</td>
+    <td>$${parseFloat(amount).toFixed(2)}</td>
+    <td>${notes}</td>
+    <td class="delete"><span>x</span></td></tr>`;
     tbody.append(row);
   }
   // put the reduce here since this should happen after looping through the items video 2:11
@@ -128,8 +132,8 @@ $("#categoryFilter").on("change", function() {
     renderItems();
   }
 });
-// 2:37 to  2:59 in video
-// this is not working  
+// 2:37 to  in video
+// this is not working - not sure why
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
 $("#budgetItems").on("click", ".delete span", function() {
   // grabbing the 'data-id' of the row containing the delete 'x' that was clicked;
