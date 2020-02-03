@@ -103,6 +103,8 @@ $("#addItem").on("click", function() {
   renderItems(budgetItems);
   // clear out the form 1:29 1:35
   $("#addItemForm form")[0].reset();
+  // reset cat filter to all
+  $("#categoryFilter").val("");
 });
 // 2:16 to 2:37
 //in video  https://codingbootcamp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=20a3a525-7333-4de6-9c47-ab4d0018f8d7
@@ -133,7 +135,7 @@ $("#categoryFilter").on("change", function() {
   }
 });
 // 2:37 to  in video
-// this is not working - not sure why
+
 // 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
 $("#budgetItems").on("click", ".delete span", function() {
   // grabbing the 'data-id' of the row containing the delete 'x' that was clicked;
